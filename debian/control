@@ -1,0 +1,12 @@
+Source: ros-melodic-ntrip-client
+Section: misc
+Priority: optional
+Maintainer: Rob Fisher <rob.fisher@parker.com>
+Build-Depends: debhelper (>= 9.0.0), ros-melodic-catkin, ros-melodic-mavros-msgs, ros-melodic-nmea-msgs, ros-melodic-rospy, ros-melodic-std-msgs
+Homepage: https://github.com/LORD-MicroStrain/ntrip_client
+Standards-Version: 3.9.2
+
+Package: ros-melodic-ntrip-client
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-melodic-mavros-msgs, ros-melodic-nmea-msgs, ros-melodic-rospy, ros-melodic-std-msgs
+Description: NTRIP client that will publish RTCM corrections to a ROS topic, and optionally subscribe to NMEA messages to send to an NTRIP server
