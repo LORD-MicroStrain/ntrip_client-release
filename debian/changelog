@@ -1,9 +1,0 @@
-ros-noetic-ntrip-client (1.0.0-1focal) focal; urgency=high
-
-  * Initial implementation of ROS NTRIP client
-  * Adds ability to cache packets if they do contain some of a mesage but not the whole thing
-  * Contributors: drobb257, nathanmillerparker, robbiefish
-
- -- Rob Fisher <rob.fisher@parker.com>  Wed, 08 Dec 2021 05:00:00 -0000
-
-
