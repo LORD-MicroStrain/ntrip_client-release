@@ -1,0 +1,16 @@
+ros-melodic-ntrip-client (1.0.1-1bionic) bionic; urgency=high
+
+  * Checks if there is a * character in the string before parsing fully
+  * Contributors: robbiefish
+
+ -- Rob Fisher <rob.fisher@parker.com>  Thu, 10 Feb 2022 05:00:00 -0000
+
+ros-melodic-ntrip-client (1.0.0-1bionic) bionic; urgency=high
+
+  * Initial implementation of ROS NTRIP client
+  * Adds ability to cache packets if they do contain some of a mesage but not the whole thing
+  * Contributors: drobb257, nathanmillerparker, robbiefish
+
+ -- Rob Fisher <rob.fisher@parker.com>  Wed, 08 Dec 2021 05:00:00 -0000
+
+
