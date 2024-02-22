@@ -53,13 +53,13 @@ class NTRIPClient:
     self._server_socket = None
 
     # Setup some parsers to parse incoming messages
-    self._rtcm_parser = RTCMParser(
+    self.rtcm_parser = RTCMParser(
       logerr=logerr,
       logwarn=logwarn,
       loginfo=loginfo,
       logdebug=logdebug
     )
-    self._nmea_parser = NMEAParser(
+    self.nmea_parser = NMEAParser(
       logerr=logerr,
       logwarn=logwarn,
       loginfo=loginfo,
@@ -129,7 +129,7 @@ class NTRIPClient:
     # Get the response from the server
     response = ''
     try:
-      response = self._server_socket.recv(_CHUNK_SIZE).decode('utf-8')
+      response = self._server_socket.recv(_CHUNK_SIZE).decode('ISO-8859-1')
     except Exception as e:
       self._logerr(
         'Unable to read response from server at http://{}:{}'.format(self._host, self._port))
@@ -216,7 +216,7 @@ class NTRIPClient:
       sentence = sentence + '\r\n'
 
     # Check if it is a valid NMEA sentence
-    if not self._nmea_parser.is_valid_sentence(sentence):
+    if not self.nmea_parser.is_valid_sentence(sentence):
       self._logwarn("Invalid NMEA sentence, not sending to server")
       return
 
@@ -284,7 +284,7 @@ class NTRIPClient:
       self._first_rtcm_received = True
 
     # Send the data to the RTCM parser to parse it
-    return self._rtcm_parser.parse(data) if data else []
+    return self.rtcm_parser.parse(data) if data else []
 
   def shutdown(self):
     # Set some state, and then disconnect
