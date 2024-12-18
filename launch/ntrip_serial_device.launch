@@ -1,0 +1,43 @@
+<?xml version="1.1"?>
+<launch>
+
+  <!-- Standalone example launch file for an ntrip serial device -->
+
+  <!-- Declare arguments with default values -->
+  <arg name="namespace"              default = "/" />
+  <arg name="node_name"              default = "ntrip_client" />
+  <arg name="debug"                  default = "false" />
+  <arg name="port"                   default = "/dev/ttyACM0" />
+  <arg name="baudrate"               default = "115200" />
+  <arg name="rtcm_message_package"   default = "rtcm_msgs" />
+
+  <!-- Set the log level to debug -->
+  <env name="NTRIP_CLIENT_DEBUG" value="$(arg debug)" />
+
+  <!-- ****************************************************************** -->
+  <!-- NTRIP Client Node -->
+  <!-- ****************************************************************** -->
+  <node name="$(arg node_name)" pkg="ntrip_client" type="ntrip_serial_device_ros.py" output="screen" ns="$(arg namespace)">
+
+    <!-- Required parameters used to connect to the NTRIP device -->
+    <param name="port"       value="$(arg port)" />
+    <param name="baudrate"   value="$(arg baudrate)" />
+
+    <!-- Not sure if this will be looked at, but this frame ID will be added to the RTCM messages published by this node -->
+    <param name="rtcm_frame_id" value="odom" />
+
+    <!-- Optional parameters that will allow for longer or shorter NMEA messages. Standard max length for NMEA is 82 -->
+    <param name="nmea_max_length" value="82" />
+    <param name="nmea_min_length" value="3" />
+
+    <!-- Use this parameter to change the type of RTCM message published by the node. Defaults to "mavros_msgs", but we also support "rtcm_msgs" -->
+    <param name="rtcm_message_package" value="$(arg rtcm_message_package)" />
+
+    <!-- Will affect how many times the node will attempt to reconnect before exiting, and how long it will wait in between attempts when a reconnect occurs -->
+    <param name="reconnect_attempt_max" value="10" />
+    <param name="reconnect_attempt_wait_seconds" value="5" />
+
+    <!-- Uncomment the following section and replace "/gx5/nmea/sentence" with the topic you are sending NMEA on if it is not the one we requested -->
+    <!--<remap from="/ntrip_client/nmea" to="/gx5/nmea/sentence" />-->
+  </node>
+</launch>
