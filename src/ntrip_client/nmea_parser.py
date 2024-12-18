@@ -1,3 +1,4 @@
+import math
 import logging
 
 NMEA_DEFAULT_MAX_LENGTH = 82
@@ -16,6 +17,33 @@ class NMEAParser:
     # Save some other config
     self.nmea_max_length = NMEA_DEFAULT_MAX_LENGTH
     self.nmea_min_length = NMEA_DEFAULT_MIN_LENGTH
+
+  @staticmethod
+  def checksum(sentence_no_checksum):
+    calculated_checksum = 0
+    for char in sentence_no_checksum[1:]:
+      calculated_checksum ^= ord(char)
+    return calculated_checksum
+  
+  @staticmethod
+  def lat_dd_to_dmm(decimal_degrees):
+    decimal_degrees_sub, decimal_degrees_whole = math.modf(abs(decimal_degrees))
+    decimal_minutes_float = decimal_degrees_sub * 60
+    decimal_minutes_sub, decimal_minutes_whole = math.modf(decimal_minutes_float)
+    degrees = int(decimal_degrees_whole)
+    decimal_minutes = int(decimal_minutes_whole)
+    decimal_subminutes = int(decimal_minutes_sub * 1e5)
+    return f"{degrees:02}{decimal_minutes:02}.{decimal_subminutes:02}"
+
+  @staticmethod
+  def lon_dd_to_dmm(decimal_degrees):
+    decimal_degrees_sub, decimal_degrees_whole = math.modf(abs(decimal_degrees))
+    decimal_minutes_float = decimal_degrees_sub * 60
+    decimal_minutes_sub, decimal_minutes_whole = math.modf(decimal_minutes_float)
+    degrees = int(decimal_degrees_whole)
+    decimal_minutes = int(decimal_minutes_whole)
+    decimal_subminutes = int(decimal_minutes_sub * 1e5)
+    return f"{degrees:03}{decimal_minutes:02}.{decimal_subminutes:02}"
 
   def is_valid_sentence(self, sentence):
     # Simple sanity checks
@@ -43,9 +71,7 @@ class NMEAParser:
     # Checksum check
     data, expected_checksum_str = sentence.rsplit(_NMEA_CHECKSUM_SEPERATOR, 1)
     expected_checksum = int(expected_checksum_str, 16)
-    calculated_checksum = 0
-    for char in data[1:]:
-      calculated_checksum ^= ord(char)
+    calculated_checksum = self.checksum(data)
     if expected_checksum != calculated_checksum:
       self._logwarn('Received invalid NMEA sentence. Checksum mismatch');
       self._logwarn('Expected Checksum:   0x{:X}'.format(expected_checksum))
