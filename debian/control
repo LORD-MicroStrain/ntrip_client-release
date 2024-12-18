@@ -1,0 +1,12 @@
+Source: ros-noetic-ntrip-client
+Section: misc
+Priority: optional
+Maintainer: Rob Fisher <rob.fisher@parker.com>
+Build-Depends: debhelper (>= 9.0.0), python3-serial, ros-noetic-catkin, ros-noetic-nmea-msgs, ros-noetic-rospy, ros-noetic-rtcm-msgs, ros-noetic-sensor-msgs, ros-noetic-std-msgs
+Homepage: https://github.com/LORD-MicroStrain/ntrip_client
+Standards-Version: 3.9.2
+
+Package: ros-noetic-ntrip-client
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-serial, ros-noetic-nmea-msgs, ros-noetic-rospy, ros-noetic-rtcm-msgs, ros-noetic-sensor-msgs, ros-noetic-std-msgs
+Description: NTRIP client that will publish RTCM corrections to a ROS topic, and optionally subscribe to NMEA messages to send to an NTRIP server
