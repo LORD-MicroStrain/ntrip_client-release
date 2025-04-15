@@ -2,6 +2,11 @@
 Changelog for package ntrip_client
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.4.1 (2025-04-15)
+------------------
+* Fix log message (`#61 <https://github.com/LORD-MicroStrain/ntrip_client/issues/61>`_)
+* Contributors: martin-kar
+
 1.4.0 (2024-12-18)
 ------------------
 * Adds ability to subscribe to fix topic, and adds ability to interface with NTRIP device (`#59 <https://github.com/LORD-MicroStrain/ntrip_client/issues/59>`_)
